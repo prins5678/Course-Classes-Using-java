@@ -1,0 +1,69 @@
+class Course {
+
+	 static int maxCapacity = 100;
+	 String courseName;
+	 int enrollments;
+	 
+	 String [] enrolledStudents;
+	 
+	 Course(String courseName){
+		 this.courseName = courseName;
+		 this.enrollments = 0;
+		 this.enrolledStudents = new String [maxCapacity];
+	 }
+	 
+	
+	 
+	 static void setMaxCapacity(int newMaxCapacity) {
+		 maxCapacity = newMaxCapacity;
+	 }
+	 
+	 void enrollStudent(String studentName) {
+		 if (enrollments >= maxCapacity) {
+	            System.out.println("Cannot enroll, course is full.");
+	            return;
+	        }
+		 enrolledStudents[enrollments] = studentName;
+		 enrollments++; 
+		 System.out.println(studentName + " enrolled in " + courseName);
+	    
+	 }
+	void unenrolledStudent(String studentName) {
+		boolean found = false;
+        for (int i = 0; i < enrollments; i++) {
+            if (enrolledStudents[i].equals(studentName)) {
+            	for (int j = i; j < enrollments - 1; j++) {
+                    enrolledStudents[j] = enrolledStudents[j + 1];
+                }
+                enrolledStudents[enrollments - 1] = null;
+                enrollments--;
+                found = true;
+                System.out.println(studentName + " has been unenrolled.");
+                break;
+            }
+        }
+        if (!found) {
+            System.out.println(studentName + " is not enrolled in this course.");
+        }
+    }
+	void listStudents() {
+        System.out.println("Students in " + courseName + ":");
+        for (int i = 0; i < enrollments; i++) {
+            System.out.println("- " + enrolledStudents[i]);
+        }
+    }
+	public static void main(String[] args) {
+        Course javaCourse = new Course("Java Programming");
+
+        javaCourse.enrollStudent("Karan");
+        javaCourse.enrollStudent("Aryan");
+        javaCourse.enrollStudent("Ankit");
+
+        javaCourse.listStudents();
+
+        javaCourse.unenrolledStudent("Aryan");
+        javaCourse.listStudents();
+
+        javaCourse.unenrolledStudent("Devil");
+	}
+}
